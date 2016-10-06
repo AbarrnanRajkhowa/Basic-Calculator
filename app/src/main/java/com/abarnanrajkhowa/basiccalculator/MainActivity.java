@@ -8,10 +8,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+
 public class MainActivity extends AppCompatActivity{
     String total = "";
     double num1,num2;
     String sign = "";
+    String checker = ".0123456789";
+    String checker2 ="+-/^x";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,27 +25,35 @@ public class MainActivity extends AppCompatActivity{
     public void Onclick(View v){
         Button button = (Button)v;
         String str = button.getText().toString();
+        if (checker.contains( str ))
         total +=str;
+        else {
+            Toast toastMessage = Toast.makeText(this,"NO THERE IS SOMWETHING WRONG WITH YOUR INPUT..!!!",Toast.LENGTH_LONG);
+            toastMessage.show();
+
+
+        }
         EditText screen = (EditText)findViewById(R.id.editText);
         screen.setText(total);
 
     }
-    public void onAdd(View v) throws IllegalArgumentException {
+    public void onAdd(View v){
         EditText screen = null;
-        try {
-            num1 = Double.parseDouble(total);
+        Button button = (Button) v;
+        String str = button.getText().toString();
+        sign = str;
+        if(checker2.contains(total)){
+            Toast toastMessage = Toast.makeText(this,"NO THERE IS SOMWETHING WRONG WITH YOUR INPUT..!!!",Toast.LENGTH_LONG);
+            toastMessage.show();
+
+
+        } else {
+            num1 = Double.parseDouble( total );
             total = "";
-            Button button = (Button) v;
-            String str = button.getText().toString();
-            sign = str;
-            screen = (EditText) findViewById(R.id.editText);
-            screen.setText(total);
-        } catch (NumberFormatException e) {
-
-           throw new IllegalArgumentException(e);
-
-
+            screen = (EditText) findViewById( R.id.editText );
+            screen.setText( total );
         }
+
 
         }
 
@@ -64,7 +75,7 @@ public class MainActivity extends AppCompatActivity{
             grandTotal=num1*num2;
         } else if(sign.equals("^")){
             grandTotal= Math.pow(num1,num2);
-        }else {
+        }else if(sign.length()>=1) {
             Toast toastMessage = Toast.makeText(this,"NO THERE IS SOMWETHING WRONG WITH YOUR INPUT..!!!",Toast.LENGTH_LONG);
             toastMessage.show();
 
